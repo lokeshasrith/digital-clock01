@@ -1,0 +1,78 @@
+import turtle
+import datetime
+
+# Set up the turtle screen
+screen = turtle.Screen()
+screen.title("Analog Clock")
+screen.bgcolor("white")
+screen.setup(width=600, height=600)
+screen.tracer(0)
+
+# Create the drawing pen
+pen = turtle.Turtle()
+pen.speed(0)
+pen.pensize(3)
+
+def draw_clock():
+    # Draw the hour markers
+    pen.up()
+    pen.goto(0, 0)
+    pen.setheading(180)
+    pen.color("black")
+    pen.width(2)
+    for _ in range(12):
+        pen.forward(170)
+        pen.pendown()
+        pen.forward(20)
+        pen.penup()
+        pen.goto(0, 0)
+        pen.right(30)
+
+    # Get the current time
+    current_time = datetime.datetime.now()
+    hour = current_time.hour
+    minute = current_time.minute
+    second = current_time.second
+
+    # Draw the hour hand
+    pen.up()
+    pen.goto(0, 0)
+    pen.color("black")
+    pen.setheading(90)
+    angle = (hour % 12 + minute / 60) * 30
+    pen.right(angle)
+    pen.pendown()
+    pen.forward(80)
+
+    # Draw the minute hand
+    pen.up()
+    pen.goto(0, 0)
+    pen.color("black")
+    pen.setheading(90)
+    angle = (minute + second / 60) * 6
+    pen.right(angle)
+    pen.pendown()
+    pen.forward(120)
+
+    # Draw the second hand
+    pen.up()
+    pen.goto(0, 0)
+    pen.color("red")
+    pen.setheading(90)
+    angle = second * 6
+    pen.right(angle)
+    pen.pendown()
+    pen.forward(150)
+
+    screen.update()
+
+# Continuously update the clock
+try:
+    while True:
+        pen.clear()
+        draw_clock()
+        screen.update()
+except turtle.Terminator:
+    pass
+
+turtle.done()
